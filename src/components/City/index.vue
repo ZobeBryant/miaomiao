@@ -85,7 +85,18 @@
 
 <script>
 export default {
-    name : 'City'
+	name : 'City',
+	mounted () {
+		this.axios({
+			url: 'https://m.maizuo.com/gateway?k=3781112',
+			headers: {
+				'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"1615691876558972813705217","bc":"110100"}',
+				'X-Host': 'mall.film-ticket.city.list'
+			}
+			}).then(res => {
+				console.log(res.data)
+			})
+	}
 }
 </script>
 
