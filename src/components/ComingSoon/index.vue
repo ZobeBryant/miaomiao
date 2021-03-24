@@ -16,10 +16,10 @@
 				</div>
 			</li> -->
 			
-			<li v-for="item in comingList" :key="item.id">
-				<div class="pic_show"><img :src="item.poster | setWH('128.180')"></div>
+			<li v-for="item in comingList" :key="item.filmId">
+				<v-touch @tap="handleToDetail(item.filmId)"><div class="pic_show"><img :src="item.poster | setWH('128.180')"></div></v-touch>
 				<div class="info_list">
-					<h2>{{item.name}} <span class="item" v-if="item.filmType.name=='3D'">3D</span><span class="item" v-else>2D</span></h2>
+					<v-touch @tap="handleToDetail(item.filmId)"><h2>{{item.name}} <span class="item" v-if="item.filmType.name=='3D'">3D</span><span class="item" v-else>2D</span></h2></v-touch>
 					<p v-if="item.actors">主演:{{item.actors | actorfilter}}</p>
                 	<p v-else>暂无主演</p>
 					<p>2018-11-30上映</p>
@@ -35,6 +35,8 @@
 
 <script>
 import Vue from 'vue'
+import VueTouch from 'vue-touch'
+Vue.use(VueTouch, {name: 'v-touch'})
 Vue.filter('actorfilter', function (data) {
   const newlist = data.map(item => item.name)
   return newlist.join(' ')
@@ -63,6 +65,12 @@ export default {
 			}
 		})
 	},
+	methods : {
+		handleToDetail(movieId){
+			// console.log(movieId);
+			this.$router.push(`/movie/detail/2/${movieId}`)
+		}
+	}
 }
 </script>
 
