@@ -1,5 +1,7 @@
 <template>
     <div class="movie_body">
+		<Loading  v-if="isLoading"/>
+		<Scroller v-else :key="comingList.length">
 		<ul>
 			<!-- <li>
 				<div class="pic_show"><img src="/images/movie_1.jpg"></div>
@@ -13,6 +15,7 @@
 					预售
 				</div>
 			</li> -->
+			
 			<li v-for="item in comingList" :key="item.id">
 				<div class="pic_show"><img :src="item.poster | setWH('128.180')"></div>
 				<div class="info_list">
@@ -26,6 +29,7 @@
 				</div>
 			</li>
 		</ul>
+		</Scroller>
 	</div>
 </template>
 
@@ -39,7 +43,8 @@ export default {
 	name : 'ComingSoon',
 	data(){
 		return {
-			comingList : []
+			comingList : [],
+			isLoading : true
 		}
 	},
 	mounted () {
@@ -54,7 +59,7 @@ export default {
 			if( msg === 'ok'){
 				console.log(res.data.data.films)
 				this.comingList = res.data.data.films;
-				this.formatDate(res.data.data.films.premiereAt)
+				this.isLoading = false
 			}
 		})
 	},

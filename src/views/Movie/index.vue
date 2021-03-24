@@ -25,11 +25,59 @@
 <script>
 import Header from '@/components/Header';
 import TabBar from '@/components/TabBar';
+import { messageBox} from '@/components/JS'
 export default {
     name : 'Movie',
     components: {
         Header,
-        TabBar
+        TabBar,
+    },
+    mounted () {
+        setTimeout(()=>{
+            this.axios({
+            url: 'https://m.maizuo.com/gateway?k=8272968',
+            headers :{
+                'X-Client-Info' : '{"a":"3000","ch":"1002","v":"5.0.4","e":"16162254242302012276342785"}',
+                'X-Host' : 'mall.film-ticket.city.locate'
+            }
+        }).then(res=>{
+            var msg = res.data.msg;
+            if(msg === 'ok'){
+                var name = res.data.data.city.name;
+                var id = res.data.data.city.cityId;
+                if(this.$store.state.city.id == id) return;
+                messageBox({
+                title : '定位',
+                content : name,
+                cancel : '取消',
+                ok : '切换定位',
+                // handleCancel(){
+                //     console.log(1)
+                // },
+                handleOk(){
+                    // console.log(2);
+                    window.localStorage.setItem('nowName',name);
+                    window.localStorage.setItem('nowId',id);
+                    window.location.reload();
+                }
+            })
+            }
+        })
+        },3000);
+        
+/*         messageBox({
+            title : '定位',
+            content : '杭州',
+            cancel : '取消',
+            ok : '切换定位',
+            handleCancel(){
+                console.log(1)
+            },
+            handleOk(){
+                console.log(2);
+            }
+
+        }) */
     }
 }
 </script>
