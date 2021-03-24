@@ -20,9 +20,9 @@
 			<li class="pullDown">{{pullDownMsg}}</li>
 			<li v-for="item in movieList" :key="item.filmId">
 				<!-- <div class="pic_show"  @tap="handleToDetail()"><img :src="item.poster | setWH('128.180')"></div> -->
-				<v-touch class="pic_show"  @tap="handleToDetail()"><img :src="item.poster | setWH('128.180')"></v-touch>
+				<v-touch class="pic_show"  @tap="handleToDetail(item.filmId)"><img :src="item.poster | setWH('128.180')"></v-touch>
 				<div class="info_list">
-					<h2>{{item.name}} <span class="item" v-if="item.filmType.name=='3D'">3D</span><span class="item" v-else>2D</span></h2>
+					<v-touch @tap="handleToDetail(item.filmId)"><h2>{{item.name}} <span class="item" v-if="item.filmType.name=='3D'">3D</span><span class="item" v-else>2D</span></h2></v-touch> 
 					<p>观众评 <span class="grade">{{item.grade}}</span></p>
 					<p v-if="item.actors">主演:{{item.actors | actorfilter}}</p>
                 	<p v-else>暂无主演</p>
@@ -111,8 +111,10 @@ export default {
 		})
 	},
 	methods: {
-		handleToDetail(){
-			console.log('handleToDetail');
+		handleToDetail(movieId){
+			// console.log('handleToDetail');
+			this.$router.push(`/movie/detail/1/${movieId}`);
+
 		},
 		handleToScroll(pos){
 			
